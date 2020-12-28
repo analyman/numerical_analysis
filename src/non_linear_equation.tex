@@ -1,0 +1,81 @@
+\chapter{非线性方程的数值解}
+
+\section{二分法}
+
+若$f(x)$在$[a,b]$区间连续, 并且有$f(a)f(b) < 0$, 那么$\exists x_0\in(a,b), f(x_0) = 0$
+
+\begin{algorithm}
+\begin{algorithmic}[1]
+    \Input $f(x), a, b, \delta, \mathbf{M}$ \Comment $M:$最大次数, $\delta:$误差限 \EndInput
+    \State $c \gets {a + b\over 2}$
+    \For {$i:=1\;\;\mathrm{to}\;\;M$}
+        \If {$|a-b|\le\delta\;\;\mathrm{or}\;\;f(c) = 0$}
+            \State \Return{$c$}
+        \ElsIf {$f(a)f(c)<0$}
+            \State $b\gets c$
+        \Else
+            \State $a\gets c$
+        \EndIf
+        \State $c \gets {a + b\over 2}$
+    \EndFor
+    \State \Return{$c$}\Comment{令$r=\lim\limits_{i\to+\infty}$, 有$|r-c|\le 2^{-(M+1)}(b-a)$}
+\end{algorithmic}
+\caption{二分法}
+\end{algorithm}
+
+\section{迭代法}
+\newtheorem{uniqueness_of_root}[theorem_root]{\theorem}
+\begin{uniqueness_of_root}
+    \label{theorem:uniqueness}
+    设$\phi(x)\in C[a,b]$满足以下两个条件
+    \begin{easylist}
+        \ListProperties(Start1=1)
+        # $\forall x\in[a,b], a\le\phi(x)\le b$
+        # $\exists L < 1, \forall x,y\in[a,b]$
+          $$|\phi(x) - \phi(y)| \le L|x-y|$$
+    \end{easylist}
+    则$\phi(x)$在$[a,b]$上存在唯一的不动点$x^\ast$, $\phi(x^\ast) = x^\ast$
+\end{uniqueness_of_root}
+
+\newtheorem{convergence_of_iterative}[theorem_root]{\theorem}
+\begin{convergence_of_iterative}
+    若$\phi(x)$满足\ref{theorem:uniqueness}的条件, 那么$x^\ast = \phi(x^\ast)$收敛并且有误差限
+    $$|x_k - x^\ast | \le {L^k\over 1-L}|x_1-x_0|$$
+\end{convergence_of_iterative}
+
+\begin{table}
+    \hbox to\linewidth{\hfill\vbox{
+        \halign{
+            \quad{\bf #}\hfill\quad & {\hbox{\hsize=.7\hsize\setstretch{1.2}\vtop{#}}}\hfill\cr
+            局部收敛 & 迭代法$x_{k+1} = \phi(x_k)$产生的序列在某个领域$R:|x-x^\ast|\le\delta$收敛到$x^\ast$那么迭代法局部收敛。
+                      如果$|\phi'(x^\ast)| < 1$, 那么$x_{k+1}=\phi(x_k)$局部收敛\cr
+            \noalign{\medskip}
+            $p$阶收敛 & 如果$x_{k+1}=\phi(x_k)$收敛到$x^\ast$并且误差$e_k=x_k-x^\ast$有
+                        $\displaystyle \lim_{k\to+\infty}{e^{k+1}\over e^p_k} = C$, 那么迭代法$p$阶收敛.
+                        $p=1$线性收敛,$p=2$平方收敛\cr
+            \noalign{\medskip}
+                     & 若$\phi'(x^\ast)=0,\cdots\phi^{(p-1)}(x^\ast)=0$, 则$x_{k+1}=\phi(x_k)$是$p$阶收敛\cr
+        }
+    }\hfill}
+    \caption{迭代法收敛}
+\end{table}
+
+\section{牛顿法}
+
+若$r$是函数$f(x)$的零点, 而$x_0$是$r$的近似值, 设$h = r - x_0$有
+$$0 = f(r) = f(x_0 + h) = f(x_0) + f'(x_0)h + o(h^2)\Longrightarrow h \approx = -{f(x_0)\over f'(x_0)} \Longrightarrow r = x_0 + h \approx x_0 - {f(x_0)\over f'(x_0)}$$
+以此可以得到牛顿迭代法迭代公式
+\begin{align}
+    x_{k+1} = \phi(x_k) = x_k - {f(x_k)\over f'(x_k)}
+\end{align}
+
+由$\phi'(x) = {f(x)f''(x)\over f'(x)^2}$可知\par
+\smallskip
+\hbox to\linewidth{\hfill\vbox{
+    \halign{
+        \quad{\bf #}\hfill\quad & {\hbox{\hsize=.5\hsize\setstretch{1.2}\vtop{#}}}\hfill\cr
+        $x^\ast$是单根 & 牛顿法平方收敛\cr
+        \noalign{\medskip}
+        $x^\ast$是重根 &牛顿法线性收敛 \cr
+    }
+}\hfill}

@@ -1,0 +1,30 @@
+\documentclass[a4paper, oneside]{book}
+
+%Options: Sonny, Lenny, Glenn, Conny, Rejne, Bjarne, Bjornstrup
+\usepackage[Sonny]{fncychap}
+\usepackage[normalem]{ulem}
+\usepackage{setspace}
+\input{\string~/texrc.tex}
+
+\geometry{tmargin=2cm, rmargin=2cm, bmargin=2cm, lmargin=2cm}
+
+\def\defn{Definition}
+\def\axiom{Axiom}
+\def\remark{Remarks}
+\def\propos{Proposition}
+\def\lemma{Lemma}
+\def\example{Example}
+\def\theorem{Theorem}
+
+\def\true{{True}}
+
+\newtheorem{theorem_root}{\defn}[chapter]
+\newtheorem{example_root}{\example}[chapter]
+
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+
+% Algorithm
+\algblockdefx[initial]{Init}{EndInit}
+{{\bf initially}\hskip.5em\relax}{\bf end initially}
+\algblockdefx[input]{Input}{EndInput}
+{{\bf Input}\hskip.5em\relax}{}

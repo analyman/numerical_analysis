@@ -1,0 +1,7 @@
+src/*.aux
+src/*.idx
+src/*.ilg
+src/*.ind
+src/*.pdf
+src/*.log
+src/*.toc

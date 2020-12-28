@@ -1,0 +1,46 @@
+\chapter{数值计算中的误差}
+
+\begin{table}[H]
+    \hbox to\linewidth{\hfill\vbox{
+    \setstretch{1.8}
+    \halign{
+        {\bf #}\hfill\quad & #\hfill\cr
+        模型误差 & 数学模型与实际问题之间存在的误差\cr
+        观测误差 & 测量物理量包含的误差\cr
+        截断误差、方法误差 & 近似解与精确解之间的误差\cr
+        舍入误差 & 由于计算机字长有限, 计算中与储存数据都可能产生的误差 \cr
+    }
+    }\hfill}
+    \caption{误差的分类}
+\end{table}
+
+设$x$是准确值，$x^\ast$是$x$的近似值
+\begin{table}[H]
+    \hbox to\linewidth{\hfill\vbox{
+    \setstretch{1.8}
+    \halign{
+        {\bf #}\hfill\qquad & #\hfill\qquad &# \hfill\cr
+        \noalign{\hrule\smallskip}
+        绝对误差 & $e^\ast = x^\ast - x$\cr
+        误差限   & $\varepsilon^\ast > 0,\quad \varepsilon^\ast \ge |e^\ast|$ & 误差绝对值的一个上界\cr
+        相对误差 & $e^\ast_r = {e^\ast\over x} = {x^\ast - x\over x}$ & 由于$x$一般不知道, 通常取$e^\ast_r = {e^\ast\over x^\ast} = {x^\ast - x\over x^\ast}$\cr
+        相对误差限 & $\varepsilon^\ast_r = {\varepsilon^\ast\over |x^\ast|}$ & \cr
+        有效数字 & \multispan2 $x^\ast$的误差限是某一位的半个单位，该位到$x^\ast$的第一位非零数字共$n$位，就说有$n$位有效数字\cr
+        \noalign{\smallskip\hrule}
+    }}\hfill}
+    \caption{误差与有效数字}
+\end{table}
+
+\begin{table}[H]
+    \hbox to\linewidth{\hfill\vbox{
+    \setstretch{2.2}
+    \halign{
+        #\hfill\cr
+        $\displaystyle\varepsilon(x_1^\ast \pm x_2^\ast) \le \varepsilon(x_1^\ast) + \varepsilon(x_2^\ast)$\cr
+        $\displaystyle\varepsilon(x_1^\ast \times x_2^\ast) \le |x_2^\ast|\varepsilon(x_1^\ast) + |x_1^\ast|\varepsilon(x_2^\ast)$\cr
+        $\displaystyle\varepsilon(x_1^\ast / x_2^\ast) \le {|x_2^\ast|\varepsilon(x_1^\ast) + |x_1^\ast|\varepsilon(x_2^\ast)\over |x_2^\ast|^2}$\cr
+        $\displaystyle\varepsilon(f(x^\ast)) \approx |f'(x^\ast)|\varepsilon(x^\ast)$\cr
+        $\displaystyle\varepsilon(f(x_1^\ast,\dots,x_n^\ast)) \approx \sum_{i=0}^n\left|\left(\partial f\over \partial x_k\right)^\ast\right|\varepsilon(x_i^\ast)$\cr
+    }}\hfill}
+    \caption{误差限的运算}
+\end{table}

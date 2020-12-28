@@ -1,0 +1,92 @@
+\chapter{线性方程组}
+
+\section{三角分解法}
+
+求$Ax=b$等价于求$Ly = b$与$Ux = y$, 其中$$A = LU$$
+$L$为单位下三角矩阵, $U$为上三角矩阵
+
+\begin{align}
+\begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n}\cr
+    a_{21} & u_{22} & \cdots & a_{2n}\cr
+    \vdots & \vdots &        & \vdots \cr
+    a_{n1} & a_{n2} & \cdots & a_{nn}\cr
+\end{pmatrix}
+ = \begin{pmatrix}
+    1\cr
+    l_{21} & 1\cr
+    \vdots & \vdots & \ddots\cr
+    l_{n1} & l_{n2} & \dots & 1\cr
+\end{pmatrix}\cdot \begin{pmatrix}
+    u_{11} & u_{12} & \cdots & u_{1n}\cr
+           & u_{22} & \cdots & u_{2n}\cr
+           &        & \ddots & \vdots \cr
+           & & &               u_{nn}\cr
+\end{pmatrix}
+\end{align}
+
+$l_{ij}$和$u_{ij}$的计算公式
+
+\begin{align}
+u_{ri} &= a_{ri} - \sum_{k=1}^{r-1}l_{rk}u_{ki}, \quad i= r,r+1,\cdots,n;\cr
+l_{ir} &= {\displaystyle\left( a_{ir} - \sum_{k=1}^{r-1}l_{ik}u_{kr}\right)\over u_{rr}}, \quad i= r+1,\cdots,n, \text{且}r\neq n.
+\end{align}
+
+\begin{algorithm}
+\begin{algorithmic}[1]
+\For{$i=1,\ldots,n$}
+    \State {求$U$的第$i$行}
+    \State {求$L$的第$i$列}
+\EndFor
+\end{algorithmic}
+\caption{矩阵三角分解(LU分解)}
+\end{algorithm}
+
+\section{矩阵的范数}
+
+\halign{
+    #\hfill\quad & #\hfill & #\hfill\cr
+    $F$范数 & $\displaystyle F(A) = \norm{A}_F = \left(\sum_{i,j=1}^n\,a_{i,j}^2\right)^{1\over 2}$\cr
+    行范数 & $\displaystyle\norm{A}_{\infty} = \max_{1\le i\le n}\sum_{j=1}^n|a_{ij}|$\cr
+    列范数 & $\displaystyle\norm{A}_{1}      = \max_{1\le j\le n}\sum_{i=1}^n|a_{ij}|$\cr
+    $2-$范数 & $\displaystyle \norm{A}_2 = \sqrt{\lambda_{\max}\left(A^TA\right)}$\cr
+    算子范数 & $\displaystyle \norm{A}_v = \max_{x\neq 0}{\norm{Ax}_v\over \norm{x}_v}$ & $\norm{Ax}_v\le\norm{A}_v\norm{x}_v$,\quad$v$分别取$\infty,1,2$就是上面三种范数\cr
+}
+
+\section{迭代法}
+
+\begin{align}
+    x^{(k+1)} = Bx^{(k)} + f
+    \label{equ:iterative_method}
+\end{align}
+
+\ref{equ:iterative_method}收敛的充要条件为\par
+\smallskip
+\hskip1.5em\hbox{\vbox{
+\begin{easylist}
+    # $\displaystyle\lim_{k\to\infty} B^k = 0$
+    # $\displaystyle\rho(B) < 1, \quad\rho(B) = \max(|\lambda_1|,\cdots,|\lambda_n|)$
+    # 存在$B$的算子范数使得$\norm{B}_v < 1$
+\end{easylist}}}
+
+\medskip
+迭代法收敛速度$R(B) = -\ln\rho(B)$
+
+\begin{align}A = D - L - U\end{align}
+\begin{table}[H]
+\hbox to\linewidth{\hfill\vbox{
+		\halign{
+			\vrule\vbox to1.3em{}\vtop to0.8em{}\quad#\hfill\quad &\vrule\quad#\hfill\quad\vrule &\quad #\hfill\quad\vrule\cr
+			\noalign{\hrule}
+            雅可比迭代法 & \hbox to.3\hsize{\vtop{\noindent\(B = D^{-1}(L + U)\) \newline \(f= D^{-1}b\)\smallskip}} & \cr
+			\noalign{\hrule}
+            高斯-赛德尔迭代法 & \hbox to.3\hsize{\vtop{\noindent$B = (D - L)^{-1}U$\newline $f = (D-L)^{-1}b$\smallskip}} &\cr
+			\noalign{\hrule}
+            超松弛迭代法(SOR) & \hbox to.4\hsize{\vtop{\noindent\(B\equiv L_\omega = (D-\omega L)^{-1}\left[(1-\omega)D + \omega U\right]\)\newline \(f = \omega(D-\omega L)^{-1}b\)\smallskip}} & $\omega$的取值范围为$(0,2)$({\bf 收敛的必要条件})\cr
+			\noalign{\hrule}
+		}
+    }\hfill
+}
+\caption{对解线性方程组$Ax = b$，不同迭代法$B$的取值}
+\end{table}
+

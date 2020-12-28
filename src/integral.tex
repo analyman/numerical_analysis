@@ -1,0 +1,20 @@
+\chapter{数值积分}
+
+\newcommand{\dx}{\mathrm{dx}}
+
+{\setstretch{3}
+\halign{
+    #\hfill\quad & #\hfill &\quad #\hfill & \quad{\setstretch{1}\parbox{4em}{#}}\hfill\cr
+    &&余项$R_n[f]$ & 代数精度\cr
+	梯形公式: & $\displaystyle\int_a^b f(x)\,\dx \approx {b-a\over 2}\left(f(a) + f(b)\right)$ & $\displaystyle-{(b-a)^3\over 12}f''(\eta)$ & $1$\cr
+    矩形公式: & $\displaystyle\int_a^b f(x)\,\dx \approx (b-a)f\left({a+b\over 2}\right)$ & $\displaystyle{(b-a)^3\over 24}f''(\eta)$ & $1$\cr
+	$n$次机械求积公式: & $\displaystyle\int_a^b f(x)\,\dx \approx \sum_{i=0}^n\,A_k\,f(x_k)$ &&\cr
+    辛普森公式: & $\displaystyle\int_a^b f(x)\,\dx \approx {b-a\over 2}\left[f(a) + 4f({a+b\over 2}) + f(b)\right]$ & $\displaystyle-{(b-a)^5\over 2880}f^{(4)}(\eta)$ & $3$\cr
+    插值型求积公式: & $\displaystyle\int_a^b f(x)\,\dx \approx \int_a^b L_n(x)\,\dx$ & $\displaystyle R_n[f] = \int_a^b\left[f(x) - L_n(x)\right]\,\dx$ & 至少为$n$\cr
+    牛顿-科特斯公式: & 节点等距的插值型求积公式 & & 至少为$n$, 偶数阶至少为$n+1$\cr
+    复合梯形公式: & \hbox to.3\hsize{\hsize=0.3\hsize\setstretch{1}\vtop{\noindent \(\begin{aligned}
+         & \int_a^b\,f(x)\,\dx \approx {h\over 2}\sum_{k=0}^{n-1}\left[f(x_k) + f(x_{k+1})\right]\\
+        =&\, {h\over 2}\left[f(a) + 2\sum_{k=1}^{n-1}f(x_k) + f(b)\right]
+    \end{aligned}\)}} &$\displaystyle\sum_{k=0}^{n-1}\left[-{h^3\over 12}f''(\eta)\right] = -{b-a\over 12}h^2f''(\eta)$&\cr
+    复合辛普森公式: &$\displaystyle{h\over 6}\sum_{k=0}^{n-1}\left[f(x_k) + 4f(x_{k+1/2}) + f(x_{k+1})\right]$& $\displaystyle-{b-a\over 180}\left(h\over 2\right)^4 f^{(4)}(\eta)$ &\cr
+}}

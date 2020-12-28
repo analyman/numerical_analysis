@@ -1,0 +1,106 @@
+\chapter{插值法}
+
+\section{拉格朗日插值}
+
+利用$x_0,\cdots,x_n$ $n+1$个点有拉格朗日$n$阶插值多项式$L_n(x)$
+
+\begin{align}
+    L_n(x) = \sum_{i=0}^n\,f(x_i)l_i(x)
+\end{align}
+
+$l_i(x)$为插值基函数
+\begin{align}
+    l_i(x) = {(x-x_0)\cdots(x-x_{i-1})\cdot(x-x_{i+1})\cdots(x-x_n) \over (x_i-x_0)\cdots(x_i-x_{i-1})\cdot(x_i-x_{i+1})\cdots(x_i-x_n)}
+\end{align}
+
+拉格朗日插值多项式的余项$R_n(x) = f(x) - L_n(x)$, 若$f(x) \in C^{n+1}$, 则有
+\begin{align}
+    \label{equ:remainv}
+    R_n(x) = {f^{(n+1)}(\xi)\over (n+1)!}\omega_{n+1}(x)
+\end{align}
+
+\fbox{\vtop{
+    设$\displaystyle \phi(t) = f(t) - L_n(t) - {R_n(x)\over\omega_{n+1}(x)}\omega_{n+1}(t)$, $\phi(t)$有$x_0,\cdots,x_n,x$一共$n+2$个零点,
+    所以$\exists\xi$, 使得
+    $$\displaystyle\phi^{(n+1)}(\xi) = f^{(n+1)}(\xi) - L_n^{n+1}(\xi) - {R_n(x)\over \omega_{n+1}(x)}(n+1)! = 0$$
+    即有
+    $$R_n(x) = {f^{(n+1)}(\xi)\over (n+1)!}\omega_{n+1}(x)$$
+}}\par
+\smallskip
+其中$\omega_{n+1}(x)$为
+\begin{align}
+\omega_{n+1}(x) = \prod_{i=0}^{n}(x-x_i)
+\end{align}
+
+特别有\(\displaystyle\sum_{i=0}^nx_i^k l_i(x) = x^k\), 
+取$k=0$,既有\(\displaystyle \sum_{i=0}^n l_i(x) = 1\)
+
+\section{牛顿插值}
+
+\subsection*{均差}
+
+\(\displaystyle f[x_i] = f(x_i)\)\par
+\(\displaystyle f[x_i,x_j] = f[x_j,x_i] = {f(x_i) - f(x_j)\over x_i - x_j}\)\hfill 一阶均差\par
+\(\displaystyle f[x_i,x_j,x_k] = f[x_j,x_i,x_k] = f[x_k,x_i,x_j] = \cdots = {f[x_i,x_j] - f[x_j,x_k]\over x_i - x_k} = \cdots\)\hfill 二阶均差\par
+$\displaystyle\vdots$
+
+牛顿插值多项式
+\begin{align}
+    P_n(x) &= f[x_0] + f[x_0,x_1](x-x_0) + \cdots + f[x_0,\cdots,x_n]\omega_n(x)\cr
+    \omega_n(x) &= \prod_{i=0}^{n-1}(x-x_i)
+\end{align}
+
+余项和拉格朗日插值多项式的余项相同,
+\begin{align}
+    R_n(x) &= f(x) - P_n(x) = f[x_0,\cdots,x_n,x]\omega_{n+1}(x)\cr
+           &= {f^{(n+1)}(\xi)\over(n+1)!}\omega_{n+1}(x)
+\end{align}
+
+可以看出
+\begin{align}
+    f[x_0,\cdots,x_n] = {f^{(n)}(\xi)\over n!}
+\end{align}
+
+\section{Hermite插值}
+
+给形如$f^{(k)}(x_i) = y_i$的$m+1$个条件可以构造$m$次 Hermite 插值多项式。 三点三次 Hermite插值多项式的例子\par
+\medskip
+\fbox{\vbox{
+    条件为$H(x_i) = f(x_i)\quad(i=0,1,2)$及$H'(x_1) = f'(x_1)$，求$H(x)$\par
+    由$H(x_i) = f(x_i)\quad(i=0,1,2)$, 可设
+    \begin{align*}
+        H(x) = f[x_0] + f[x_0,x_1](x-x_0) + f[x_0,x_1,x_2](x-x_0)(x-x_1) + A(x-x_0)(x-x_1)(x-x_2)
+    \end{align*}
+    利用$H'(x_1) = f'(x_1)$可以得到
+    \begin{align*}
+        A = {f'(x_1) - f[x_0,x_1] - (x_1-x_0)f[x_0,x_1,x_2]\over (x_1-x_0)(x_1-x_2)}
+    \end{align*}
+
+    余项可以利用类似\ref{equ:remainv}的方法求出,
+    \begin{align*}
+        R_4(x) = f(x) - H(x) = {f^{(4)}(\xi)\over 4!}(x-x_0)(x-x_1)^2(x-x_2)
+    \end{align*}
+}}
+
+\section{分段低次插值}
+
+并不是多项式次数越高精度一定越好
+
+\section{三次样条插值}
+
+有$(x_i, f(x_i))\quad(i=0,\dots,n)$ $n+1$个点, 函数$S_n(x)$为满足
+通过每一个点并且二阶可导的分段函数, 在每个$(x_i,x_{i+1})$区间$S_n(x)$都是三次多项式函数，
+所以$S_n(x)$一共有$4n$个参数, $S_n(x)$的约束有\par
+\hskip.3\hsize
+\begin{tabular}{|c|c|}
+    \hline
+    约束 & 次数\\\hline
+    $S(x_i) = f(x_i)$ & $n+1$\\\hline
+    $S(x_i - 0) = S(x_i + 0)$ & $n-1$\\\hline
+    $S'(x_i - 0) = S'(x_i + 0)$ & $n-1$\\\hline
+    $S''(x_i - 0) = S''(x_i + 0)$ & $n-1$\\\hline
+     & $4n-2$\\\hline
+\end{tabular}
+
+\medskip
+所以需要额外的$2$个约束来确定$S_n(x)$的所有参数, 可以取$S''(x_0) = S''(x_n) = 0$称为自然边界条件
